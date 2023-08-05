@@ -1,0 +1,16 @@
+{
+  "name": "turtlestackdev/tower-of-babel",
+  "description": "A plugin designed to facilitate the translation of posts and MailChimp email campaigns.",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Shane Scanlon",
+      "email": "shane@turtlestack.dev"
+    }
+  ],
+  "require": {
+    "psr/log": "^1.1",
+    "monolog/monolog": "^2.3"
+  }
+}

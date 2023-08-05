@@ -1,14 +1,6 @@
 <?php
 
-/**
- * The admin-specific functionality of the plugin.
- *
- * @link       https://turtlestack.dev
- * @since      1.0.0
- *
- * @package    Tower_Of_Babel
- * @subpackage Tower_Of_Babel/admin
- */
+use Monolog\Logger;
 
 /**
  * The admin-specific functionality of the plugin.
@@ -16,88 +8,67 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
- * @package    Tower_Of_Babel
- * @subpackage Tower_Of_Babel/admin
- * @author     Shane Scanlon <shane@turtlestack.dev>
  */
 class Tower_Of_Babel_Admin {
+    private string $plugin_name;
+    private string $version;
+    private Logger $logger;
 
-	/**
-	 * The ID of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
-	 */
-	private $plugin_name;
+    /**
+     * Initialize the class and set its properties.
+     */
+    public function __construct(string $plugin_name, string $version, Logger $logger) {
+        $this->plugin_name = $plugin_name;
+        $this->version = $version;
+        $this->logger = $logger;
+    }
 
-	/**
-	 * The version of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
-	 */
-	private $version;
+    /**
+     * Register the stylesheets for the admin area.
+     */
+    public function enqueue_styles(): void {
 
-	/**
-	 * Initialize the class and set its properties.
-	 *
-	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of this plugin.
-	 * @param      string    $version    The version of this plugin.
-	 */
-	public function __construct( $plugin_name, $version ) {
+        /**
+         * This function is provided for demonstration purposes only.
+         *
+         * An instance of this class should be passed to the run() function
+         * defined in Tower_Of_Babel_Loader as all the hooks are defined
+         * in that particular class.
+         *
+         * The Tower_Of_Babel_Loader will then create the relationship
+         * between the defined hooks and the functions defined in this
+         * class.
+         */
+        wp_enqueue_style(
+            $this->plugin_name,
+            plugin_dir_url(__FILE__).'css/tower-of-babel-admin.css',
+            [],
+            $this->version
+        );
+    }
 
-		$this->plugin_name = $plugin_name;
-		$this->version = $version;
+    /**
+     * Register the JavaScript for the admin area.
+     */
+    public function enqueue_scripts(): void {
 
-	}
-
-	/**
-	 * Register the stylesheets for the admin area.
-	 *
-	 * @since    1.0.0
-	 */
-	public function enqueue_styles() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Tower_Of_Babel_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Tower_Of_Babel_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/tower-of-babel-admin.css', array(), $this->version, 'all' );
-
-	}
-
-	/**
-	 * Register the JavaScript for the admin area.
-	 *
-	 * @since    1.0.0
-	 */
-	public function enqueue_scripts() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Tower_Of_Babel_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Tower_Of_Babel_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/tower-of-babel-admin.js', array( 'jquery' ), $this->version, false );
-
-	}
-
+        /**
+         * This function is provided for demonstration purposes only.
+         *
+         * An instance of this class should be passed to the run() function
+         * defined in Tower_Of_Babel_Loader as all the hooks are defined
+         * in that particular class.
+         *
+         * The Tower_Of_Babel_Loader will then create the relationship
+         * between the defined hooks and the functions defined in this
+         * class.
+         */
+        wp_enqueue_script(
+            $this->plugin_name,
+            plugin_dir_url(__FILE__).'js/tower-of-babel-admin.js',
+            [],
+            $this->version,
+            true
+        );
+    }
 }
