@@ -1,3 +1,6 @@
+# PhpStorm
+/.idea
+
 # Composer files
 composer.phar
 /vendor/
@@ -11,3 +14,10 @@ yarn-error.log
 *.log
 *.sql
 *.sqlite
+
+# PHPUnit
+/.phpunit.cache
+.phpunit.result.cache
+
+# log files
+/logs

@@ -12,20 +12,13 @@
  * - Verify the output of $_GET makes sense
  * - Repeat with other user roles. Best directly by using the links/query string parameters.
  * - Repeat things for multisite. Once for a single site in the network, once sitewide.
- *
- * This file may be updated more in future version of the Boilerplate; however, this is the
- * general skeleton and outline for how the file should work.
- *
- * For more information, see the following discussion:
- * https://github.com/tommcfarlin/WordPress-Plugin-Boilerplate/pull/123#issuecomment-28541913
- *
- * @link       https://turtlestack.dev
- * @since      1.0.0
- *
- * @package    Tower_Of_Babel
  */
 
 // If uninstall not called from WordPress, then exit.
+use TowerOfBabel\Plugin;
+
 if (!defined('WP_UNINSTALL_PLUGIN')) {
     exit;
 }
+
+Plugin::uninstall();
