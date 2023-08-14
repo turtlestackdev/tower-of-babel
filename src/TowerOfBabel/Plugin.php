@@ -4,7 +4,6 @@
 namespace TowerOfBabel;
 
 
-use Symfony\Component\Filesystem\Filesystem;
 use TowerOfBabel\Hooks\HookLoader;
 use TowerOfBabel\Hooks\Localization;
 use TowerOfBabel\Hooks\Script;
