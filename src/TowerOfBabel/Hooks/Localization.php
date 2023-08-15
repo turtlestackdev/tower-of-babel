@@ -7,8 +7,8 @@ use TowerOfBabel\Plugin;
 
 class Localization extends Hook {
 
-    function get_type(): string {
-        return "action";
+    function get_type(): HookType {
+        return HookType::Action;
     }
 
     public function get_hook(): string {

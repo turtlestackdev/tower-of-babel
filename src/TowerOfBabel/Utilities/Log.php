@@ -25,6 +25,12 @@ class Log {
             if ($stream !== null) {
                 $logger->pushHandler(new RotatingFileHandler(self::get_stream(), 7, Logger::INFO));
                 $logger->setTimezone(new DateTimeZone('UTC'));
+                try {
+                    $logger->info("creating logger");
+                } catch (\Exception) {
+                    $logger->popHandler();
+                    $logger->pushHandler(new NullHandler());
+                }
             } else {
                 $logger->pushHandler(new NullHandler());
             }

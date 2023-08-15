@@ -10,28 +10,24 @@ use TowerOfBabel\Utilities\Log;
 
 abstract class Enqueue extends Hook {
     protected string $_hook;
-    protected string $area;
+    protected HookArea $area;
 
-    public function __construct(string $area) {
-        switch (strtolower($area)) {
-        case 'public':
-            $this->area = 'public';
+    public function __construct(HookArea $area) {
+        switch ($area) {
+        case HookArea::Public:
             $this->_hook = 'wp_enqueue_scripts';
             break;
 
-        case 'admin':
-            $this->area = 'admin';
+        case HookArea::Admin:
             $this->_hook = 'admin_enqueue_scripts';
             break;
-
-        default:
-            Log::warning('invalid enqueue area: expected "public" or "admin"', ['area' => $area]);
-            throw new InvalidArgumentException('invalid script area');
         }
+
+        $this->area = $area;
     }
 
-    function get_type(): string {
-        return 'action';
+    function get_type(): HookType {
+        return HookType::Action;
     }
 
     public function get_hook(): string {

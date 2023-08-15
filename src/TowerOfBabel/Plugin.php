@@ -4,10 +4,12 @@
 namespace TowerOfBabel;
 
 
+use TowerOfBabel\Hooks\HookArea;
 use TowerOfBabel\Hooks\HookLoader;
 use TowerOfBabel\Hooks\Localization;
 use TowerOfBabel\Hooks\Script;
 use TowerOfBabel\Hooks\Style;
+use TowerOfBabel\Hooks\SettingsMenu;
 use TowerOfBabel\Utilities\Log;
 use TowerOfBabel\Utilities\Path;
 
@@ -20,10 +22,11 @@ class Plugin {
         try {
             $this->loader = new HookLoader();
             $this->loader->add_hook(new Localization());
-            $this->loader->add_hook(new Style('admin'));
-            $this->loader->add_hook(new Script('admin'));
-            $this->loader->add_hook(new Style('public'));
-            $this->loader->add_hook(new Script('public'));
+            $this->loader->add_hook(new Style(HookArea::Admin));
+            $this->loader->add_hook(new Script(HookArea::Admin));
+            $this->loader->add_hook(new Style(HookArea::Public));
+            $this->loader->add_hook(new Script(HookArea::Public));
+            $this->loader->add_hook(new SettingsMenu());
         } catch (\Exception $error) {
             Log::error('could not add hooks', ['exception' => $error]);
         }

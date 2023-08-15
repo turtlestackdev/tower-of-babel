@@ -3,8 +3,6 @@
 
 namespace TowerOfBabel\Hooks;
 
-use TowerOfBabel\Utilities\Log;
-
 /**
  * Register all actions and filters for the plugin.
  *
@@ -29,15 +27,13 @@ class HookLoader {
     public function run(): void {
         /** @var Hook $hook */
         foreach ($this->hooks as $hook) {
-            switch (strtolower($hook->get_type())) {
-            case 'action':
-                add_action($hook->get_hook(), [$hook, 'callback'], $hook->get_priority(), $hook->get_accepted_args());
+            switch ($hook->get_type()) {
+            case HookType::Action:
+                add_action($hook->get_hook(), [$hook, 'callback_wrapper'], $hook->get_priority(), $hook->get_accepted_args());
                 break;
-            case 'filter':
-                add_filter($hook->get_hook(), [$hook, 'callback'], $hook->get_priority(), $hook->get_accepted_args());
+            case HookType::Filter:
+                add_filter($hook->get_hook(), [$hook, 'callback_wrapper'], $hook->get_priority(), $hook->get_accepted_args());
                 break;
-            default:
-                Log::error("skipping hook, invalid type", ['hook' => $hook]);
             }
         }
     }
