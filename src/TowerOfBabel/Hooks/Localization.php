@@ -11,11 +11,11 @@ class Localization extends Hook {
         return HookType::Action;
     }
 
-    public function get_hook(): string {
+    public function get_id(): string {
         return 'plugins_loaded';
     }
 
-    public function callback(): void {
+    protected function callback(): void {
         load_plugin_textdomain(
             Plugin::NAME,
             false,

@@ -9,17 +9,17 @@ use TowerOfBabel\Plugin;
 use TowerOfBabel\Utilities\Log;
 
 abstract class Enqueue extends Hook {
-    protected string $_hook;
+    protected string $_id;
     protected HookArea $area;
 
     public function __construct(HookArea $area) {
         switch ($area) {
         case HookArea::Public:
-            $this->_hook = 'wp_enqueue_scripts';
+            $this->_id = 'wp_enqueue_scripts';
             break;
 
         case HookArea::Admin:
-            $this->_hook = 'admin_enqueue_scripts';
+            $this->_id = 'admin_enqueue_scripts';
             break;
         }
 
@@ -30,11 +30,11 @@ abstract class Enqueue extends Hook {
         return HookType::Action;
     }
 
-    public function get_hook(): string {
-        return $this->_hook;
+    public function get_id(): string {
+        return $this->_id;
     }
 
-    public function callback(): void {
+    protected function callback(): void {
         wp_enqueue_script(
             Plugin::NAME,
             $this->get_asset(),
