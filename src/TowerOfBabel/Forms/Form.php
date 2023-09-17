@@ -4,7 +4,7 @@
 namespace TowerOfBabel\Forms;
 
 
-use TowerOfBabel\Hooks\Settings\SettingsGroup;
+use TowerOfBabel\Hooks\Settings\SettingsForm;
 use TowerOfBabel\Templates\Template;
 
 class Form {
@@ -14,7 +14,7 @@ class Form {
     /** @var array<FormSection> */
     public array $form_sections = [];
 
-    public function __construct(SettingsGroup $settings) {
+    public function __construct(SettingsForm $settings) {
         $this->id = $settings->get_name();
         $this->label = $settings->get_options_name();
         foreach ($settings->get_sections() as $section) {

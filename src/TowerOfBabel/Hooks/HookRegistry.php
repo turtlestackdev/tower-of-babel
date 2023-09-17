@@ -17,7 +17,7 @@ class HookRegistry {
      * A utility function that is used to register the actions and hooks into a single
      * collection.
      */
-    public function register_hook(Hook $hook): void {
+    public function add_hook(Hook $hook): void {
         $this->hooks[] = $hook;
     }
 

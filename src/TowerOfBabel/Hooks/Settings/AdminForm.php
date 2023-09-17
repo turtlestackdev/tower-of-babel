@@ -5,7 +5,7 @@ namespace TowerOfBabel\Hooks\Settings;
 
 use TowerOfBabel\Hooks\Settings\Slack\SlackSettings;
 
-class AdminGroup extends SettingsGroup {
+class AdminForm extends SettingsForm {
     public function get_name(): string {
         return 'tower-of-babel-admin-settings';
     }

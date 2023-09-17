@@ -8,8 +8,8 @@ use TowerOfBabel\Hooks\Hook;
 use TowerOfBabel\Hooks\HookType;
 
 class Settings extends Hook {
-    /** @var SettingsGroup[] */
-    public array $groups = [];
+    /** @var SettingsForm[] */
+    public array $forms = [];
 
 
     public function get_id(): string {
@@ -20,30 +20,48 @@ class Settings extends Hook {
         return HookType::Action;
     }
 
-    public function add_group(SettingsGroup $setting): void {
-        $this->groups[] = $setting;
+    public function add_form(SettingsForm $setting): void {
+        $this->forms[] = $setting;
     }
 
-    /** @return  SettingsGroup[] */
-    public function get_groups(): array {
-        return $this->groups;
+    /** @return  SettingsForm[] */
+    public function get_forms(): array {
+        return $this->forms;
     }
 
     protected function callback(): void {
-        foreach ($this->groups as $group) {
-            $this->register_setting($group);
+        foreach ($this->forms as $form) {
+            $this->register_setting($form);
         }
     }
 
-    protected function register_setting(SettingsGroup $group): void {
-        register_setting($group->get_name(), $group->get_options_name());
-        foreach ($group->get_sections() as $section) {
+    protected function register_setting(SettingsForm $form): void {
+        register_setting($form->get_name(), $form->get_options_name());
+        foreach ($form->get_sections() as $section) {
             add_settings_section(
                 $section->get_id(),
                 $section->get_title(),
                 [$section, 'callback_wrapper'],
-                $group->get_name()
+                $form->get_name()
             );
+
+            foreach($section->get_fields() as $field) {
+                add_settings_field(
+                    $field->id,
+                    $field->label,
+                    [$this, 'noop'],
+                    $form->get_id(),
+                    $section->get_id(),
+                    $field->args);
+            }
         }
+    }
+
+    private function noop(): void {
+        // The WordPress settings system requires a callback.
+        // This callback is expected to echo out to the browser.
+        // I am dumbfounded by this design.
+        // All our fields will be compiled and rendered via the Hooks\SettingsForm::render_form function.
+        // This function serves as the callback for WP.
     }
 }

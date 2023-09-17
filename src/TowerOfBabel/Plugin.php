@@ -10,7 +10,7 @@ use TowerOfBabel\Hooks\HookArea;
 use TowerOfBabel\Hooks\HookRegistry;
 use TowerOfBabel\Hooks\Localization;
 use TowerOfBabel\Hooks\Script;
-use TowerOfBabel\Hooks\Settings\AdminGroup;
+use TowerOfBabel\Hooks\Settings\AdminForm;
 use TowerOfBabel\Hooks\Settings\Settings;
 use TowerOfBabel\Hooks\Style;
 use TowerOfBabel\Utilities\Log;
@@ -28,23 +28,23 @@ class Plugin {
 
     protected function add_settings(): void {
         $this->settings = new Settings();
-        $this->settings->add_group(new AdminGroup());
+        $this->settings->add_form(new AdminForm());
     }
 
     protected function register_hooks(): void {
         try {
             $this->hooks = new HookRegistry();
-            $this->hooks->register_hook(new Localization());
-            $this->hooks->register_hook(new Style(HookArea::Admin));
-            $this->hooks->register_hook(new Script(HookArea::Admin));
-            $this->hooks->register_hook(new Style(HookArea::Public));
-            $this->hooks->register_hook(new Script(HookArea::Public));
+            $this->hooks->add_hook(new Localization());
+            $this->hooks->add_hook(new Style(HookArea::Admin));
+            $this->hooks->add_hook(new Script(HookArea::Admin));
+            $this->hooks->add_hook(new Style(HookArea::Public));
+            $this->hooks->add_hook(new Script(HookArea::Public));
 
             // The settings themselves and the menus are registered under different hooks,
             // but they need to be tightly coupled to avoid building UIs through echo statements.
-            $this->hooks->register_hook($this->settings);
-            foreach ($this->settings->get_groups() as $setting) {
-                $this->hooks->register_hook($setting->get_menu());
+            $this->hooks->add_hook($this->settings);
+            foreach ($this->settings->get_forms() as $form) {
+                $this->hooks->add_hook($form);
             }
 
         } catch (Exception $error) {

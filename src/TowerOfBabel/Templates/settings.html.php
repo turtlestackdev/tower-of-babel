@@ -1,5 +1,6 @@
 <div class="wrap">
     <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+    <h2><?= $data['name'] ?? 'EMPTY' ?></h2>
     <form action="<?php menu_page_url( 'tower-of-babel-settings' ) ?>" method="post">
         <?php
         // output security fields for the registered setting "wporg_options"
