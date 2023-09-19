@@ -1,6 +1,6 @@
 <?php
 
-namespace TowerOfBabel\Forms;
+namespace TowerOfBabel\Hooks\Settings;
 
 enum FieldType: string {
     case Text = 'text';

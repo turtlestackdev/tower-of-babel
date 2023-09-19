@@ -6,6 +6,14 @@ namespace TowerOfBabel\Hooks\Settings;
 use TowerOfBabel\Hooks\Settings\Slack\SlackSettings;
 
 class AdminForm extends SettingsForm {
+    /** @var SettingsSection[] $sections */
+    public array $sections = [];
+
+    public function __construct() {
+        $this->sections[] = new SlackSettings();
+    }
+
+
     public function get_name(): string {
         return 'tower-of-babel-admin-settings';
     }
@@ -30,8 +38,6 @@ class AdminForm extends SettingsForm {
      * @inheritDoc
      */
     public function get_sections(): array {
-        $slack = new SlackSettings();
-
-        return [$slack];
+        return $this->sections;
     }
 }

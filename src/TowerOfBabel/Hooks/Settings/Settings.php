@@ -52,7 +52,7 @@ class Settings extends Hook {
                     [$this, 'noop'],
                     $form->get_id(),
                     $section->get_id(),
-                    $field->args);
+                    []);
             }
         }
     }
