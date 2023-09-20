@@ -53,6 +53,13 @@ function deactivate_tower_of_babel(): void {
 register_deactivation_hook(__FILE__, 'deactivate_tower_of_babel');
 
 /**
+ * Set static path vars on the plugin prior to running.
+ * These are used to find other resources.
+ */
+Plugin::set_base_dir(plugin_dir_path(__FILE__));
+Plugin::set_web_path(plugin_dir_url(__FILE__));
+
+/**
  * Begins execution of the plugin.
  *
  * Since everything within the plugin is registered via hooks,

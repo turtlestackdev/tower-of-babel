@@ -20,6 +20,8 @@ class Plugin {
     const VERSION = '0.1.0';
     protected HookRegistry $hooks;
     protected Settings $settings;
+    protected static string $base_dir;
+    protected static string $web_path;
 
     public function __construct() {
         $this->add_settings();
@@ -72,11 +74,24 @@ class Plugin {
         Log::info('The Tower of Babel has fallen');
     }
 
+    public static function set_base_dir(string $dir): void {
+        static::$base_dir = $dir;
+    }
+
     public static function base_dir(): string {
-        return Path::join(__DIR__, '/../../');
+        return static::$base_dir;
     }
 
     public static function resource_path(string ...$paths): string {
-        return Path::join(self::base_dir(), ...$paths);
+        return Path::join(static::$base_dir, ...$paths);
+    }
+
+    public static function set_web_path(string $path): void {
+        static::$web_path = $path;
+    }
+
+    public static function web_path(string ...$paths): string {
+        // This won't work if running on Windows.
+        return Path::join(static::$web_path, ...$paths);
     }
 }

@@ -21,3 +21,5 @@ yarn-error.log
 
 # log files
 /logs
+
+/dist

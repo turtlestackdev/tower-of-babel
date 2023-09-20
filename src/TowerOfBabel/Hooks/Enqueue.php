@@ -34,15 +34,5 @@ abstract class Enqueue extends Hook {
         return $this->_id;
     }
 
-    protected function callback(): void {
-        wp_enqueue_script(
-            Plugin::NAME,
-            $this->get_asset(),
-            [],
-            Plugin::VERSION,
-            true
-        );
-    }
-
     abstract public function get_asset(): string;
 }
