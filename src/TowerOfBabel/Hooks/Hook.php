@@ -10,5 +10,7 @@ abstract class Hook extends EntityLoader {
 
     public function get_accepted_args(): int { return 1; }
 
+    abstract public function get_hook_name(): string;
+
     abstract function get_type(): HookType;
 }

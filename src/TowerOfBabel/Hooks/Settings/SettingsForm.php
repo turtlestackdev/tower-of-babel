@@ -13,7 +13,7 @@ abstract class SettingsForm extends Hook {
         return HookType::Action;
     }
 
-    public function get_id(): string {
+    public function get_hook_name(): string {
         // admin_menu is the hook name defined by WordPress needed to add this as a menu item.
         return 'admin_menu';
     }
@@ -28,7 +28,7 @@ abstract class SettingsForm extends Hook {
                 $this->get_page_title(),
                 $this->get_menu_title(),
                 'manage_options',
-                $this->get_id(),
+                $this->get_hook_name(),
                 [$this, 'render_form']
             );
         } else {
@@ -38,7 +38,7 @@ abstract class SettingsForm extends Hook {
                 $this->get_page_title(),
                 $this->get_menu_title(),
                 'manage_options',
-                $this->get_id(),
+                $this->get_hook_name(),
                 [$this, 'render_form']
             );
         }
@@ -54,14 +54,14 @@ abstract class SettingsForm extends Hook {
     }
 
     public function get_options_name(): string {
-        return $this->get_name().'-options';
+        return $this->get_id().'-options';
     }
 
     public function get_form_data() {
 
     }
 
-    abstract function get_name(): string;
+    abstract function get_id(): string;
 
     abstract function get_parent_menu(): ?ParentMenu;
 

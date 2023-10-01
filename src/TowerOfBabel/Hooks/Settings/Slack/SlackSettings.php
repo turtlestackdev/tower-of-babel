@@ -34,8 +34,4 @@ class SlackSettings extends SettingsSection {
     public function get_fields(): array {
         return $this->fields;
     }
-
-    protected function callback(): void {
-        Template::load('slack/admin-form-header');
-    }
 }

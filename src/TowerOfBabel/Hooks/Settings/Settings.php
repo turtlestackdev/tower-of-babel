@@ -12,7 +12,7 @@ class Settings extends Hook {
     public array $forms = [];
 
 
-    public function get_id(): string {
+    public function get_hook_name(): string {
         return 'admin_init';
     }
 
@@ -36,16 +36,16 @@ class Settings extends Hook {
     }
 
     protected function register_setting(SettingsForm $form): void {
-        register_setting($form->get_name(), $form->get_options_name());
+        register_setting($form->get_id(), $form->get_options_name());
         foreach ($form->get_sections() as $section) {
             add_settings_section(
                 $section->get_id(),
                 $section->get_title(),
-                [$section, 'callback_wrapper'],
-                $form->get_name()
+                [$this, 'noop'],
+                $form->get_id()
             );
 
-            foreach($section->get_fields() as $field) {
+            foreach ($section->get_fields() as $field) {
                 add_settings_field(
                     $field->id,
                     $field->label,
@@ -57,7 +57,7 @@ class Settings extends Hook {
         }
     }
 
-    private function noop(): void {
+    public function noop(): void {
         // The WordPress settings system requires a callback.
         // This callback is expected to echo out to the browser.
         // I am dumbfounded by this design.

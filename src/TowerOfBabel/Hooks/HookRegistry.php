@@ -30,7 +30,7 @@ class HookRegistry {
             switch ($hook->get_type()) {
             case HookType::Action:
                 add_action(
-                    $hook->get_id(),
+                    $hook->get_hook_name(),
                     [$hook, 'callback_wrapper'],
                     $hook->get_priority(),
                     $hook->get_accepted_args()
@@ -38,7 +38,7 @@ class HookRegistry {
                 break;
             case HookType::Filter:
                 add_filter(
-                    $hook->get_id(),
+                    $hook->get_hook_name(),
                     [$hook, 'callback_wrapper'],
                     $hook->get_priority(),
                     $hook->get_accepted_args()

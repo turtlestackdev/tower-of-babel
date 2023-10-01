@@ -30,7 +30,7 @@ abstract class Enqueue extends Hook {
         return HookType::Action;
     }
 
-    public function get_id(): string {
+    public function get_hook_name(): string {
         return $this->_id;
     }
 

@@ -14,7 +14,7 @@ class AdminForm extends SettingsForm {
     }
 
 
-    public function get_name(): string {
+    public function get_id(): string {
         return 'tower-of-babel-admin-settings';
     }
 

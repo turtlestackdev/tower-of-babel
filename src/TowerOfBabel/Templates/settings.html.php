@@ -7,7 +7,10 @@ $form = $data;
 ?>
 <div class="wrap">
     <h1 class="tob-text-red-500"><?= $form->get_page_title() ?></h1>
-    <form name="<?= $form->get_name() ?>" action="options.php" method="post">
+    <pre>
+        <?php var_dump(get_option($form->get_id())); ?>
+    </pre>
+    <form name="<?= $form->get_id() ?>" action="options.php" method="post">
         <?php foreach ($form->get_sections() as $section) { ?>
             <fieldset>
                 <legend><?= $section->get_title() ?></legend>

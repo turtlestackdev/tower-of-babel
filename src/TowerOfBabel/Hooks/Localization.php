@@ -11,7 +11,7 @@ class Localization extends Hook {
         return HookType::Action;
     }
 
-    public function get_id(): string {
+    public function get_hook_name(): string {
         return 'plugins_loaded';
     }
 
