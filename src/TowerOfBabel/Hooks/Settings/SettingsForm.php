@@ -7,6 +7,9 @@ namespace TowerOfBabel\Hooks\Settings;
 use TowerOfBabel\Hooks\Hook;
 use TowerOfBabel\Hooks\HookType;
 use TowerOfBabel\Templates\Template;
+use TowerOfBabel\Utilities\Log;
+use Symfony\Component\HttpFoundation\Request;
+
 
 abstract class SettingsForm extends Hook {
     function get_type(): HookType {
@@ -18,22 +21,26 @@ abstract class SettingsForm extends Hook {
         return 'admin_menu';
     }
 
+    public function get_action(): string {
+        return menu_page_url($this->get_id());
+    }
 
     protected function callback(): void {
         // this callback function is called when the admin_menu hook is triggered
         $parent_menu_slug = $this->get_parent_menu()?->slug($this->get_custom_type());
         if ($parent_menu_slug == null) {
             // if no parent menu is defined, we add this as a top level menu
-            add_menu_page(
+            $hookname = add_menu_page(
                 $this->get_page_title(),
                 $this->get_menu_title(),
                 'manage_options',
                 $this->get_hook_name(),
                 [$this, 'render_form']
             );
+            add_action('load-'.$hookname, [$this, 'handle_submit']);
         } else {
             // otherwise we add it as the submenu of the parent, e.g., plugins.php
-            add_submenu_page(
+            $hookname = add_submenu_page(
                 $parent_menu_slug,
                 $this->get_page_title(),
                 $this->get_menu_title(),
@@ -41,6 +48,7 @@ abstract class SettingsForm extends Hook {
                 $this->get_hook_name(),
                 [$this, 'render_form']
             );
+            add_action('load-'.$hookname, [$this, 'handle_page_load']);
         }
     }
 
@@ -53,12 +61,19 @@ abstract class SettingsForm extends Hook {
         Template::load('settings', $this);
     }
 
-    public function get_options_name(): string {
-        return $this->get_id().'-options';
+    public function handle_page_load(): void {
+        $request = Request::createFromGlobals();
+        if ($request->getMethod() == Request::METHOD_POST) {
+            $this->handle_submit($request);
+        }
     }
 
-    public function get_form_data() {
+    protected function handle_submit(Request $request): void {
+        Log::info("form submitted", ['args' => $request]);
+    }
 
+    public function get_options_name(): string {
+        return $this->get_id().'-options';
     }
 
     abstract function get_id(): string;
